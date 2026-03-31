@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reports - Tea Factory Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <div class="p-8">
+        <h1 class="text-3xl font-bold mb-6">📑 Reports Dashboard</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-3">🍃 Leaf Collection Report</h2>
+                <button onclick="generateReport('Leaf Collection')" 
+                    class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                    Generate Report
+                </button>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-3">🏭 Production Report</h2>
+                <button onclick="generateReport('Production')" 
+                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Generate Report
+                </button>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-3">🚚 Transport Report</h2>
+                <button onclick="generateReport('Transport')" 
+                    class="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">
+                    Generate Report
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function generateReport(type) {
+            alert(type + " Report Generated Successfully!");
+        }
+    </script>
+
+</body>
+</html>

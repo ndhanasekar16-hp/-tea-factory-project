@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Orders - Tea Factory Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="purchase_orders.css">
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-gray-900 text-white flex-shrink-0">
+            <div class="p-6">
+                <div class="flex items-center space-x-3 mb-8">
+                    <div
+                        class="w-12 h-12 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-industry text-white"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold">Tea Factory</h2>
+                        <p class="text-xs text-gray-400" id="userEmail">user@teafactory.com</p>
+                    </div>
+                </div>
+
+                <nav class="space-y-2" id="sidebarNav">
+                    <a href="index.html"
+                        class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition">
+                        <span>🏠</span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="purchase_orders.html"
+                        class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg bg-gray-800 transition">
+                        <span>🛍️</span>
+                        <span>Purchase Orders</span>
+                    </a>
+                    <!-- Other links would go here, kept minimal for this specific page focus -->
+                    <a href="employees.html"
+                        class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition">
+                        <span>👤</span>
+                        <span>Employees</span>
+                    </a>
+                    <a href="transport.html"
+                        class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition">
+                        <span>🚚</span>
+                        <span>Transport</span>
+                    </a>
+                </nav>
+
+                <div class="mt-8 pt-8 border-t border-gray-800">
+                    <button onclick="logout()"
+                        class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg hover:bg-red-600 transition text-red-400 hover:text-white">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 bg-gray-100 overflow-y-auto">
+            <header class="bg-white shadow-sm border-b border-gray-200">
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">Purchase Orders</h1>
+                        <p class="text-sm text-gray-600">Manage and track purchase orders</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold"
+                                id="userInitials">
+                                U
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-gray-800" id="userName">User</p>
+                                <p class="text-xs text-gray-500" id="userRoleDisplay">Role</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="p-6">
+                <!-- Add Purchase Order Form -->
+                <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-bold text-gray-800"><i
+                                class="fas fa-plus-circle mr-2 text-purple-600"></i>New Purchase Order</h2>
+                        <button id="toggleFormBtn" class="text-gray-500 hover:text-purple-600 focus:outline-none">
+                            <i class="fas fa-chevron-up"></i>
+                        </button>
+                    </div>
+
+                    <form id="purchaseOrderForm" class="hidden md:block transition-all duration-300">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Purchase & Supplier Info -->
+                            <div class="space-y-4">
+                                <h3 class="text-sm uppercase tracking-wide text-gray-500 font-semibold border-b pb-2">
+                                    Supplier Details</h3>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Purchase Date</label>
+                                    <input type="date" id="purchaseDate" required
+                                        class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Supplier ID</label>
+                                    <input type="text" id="supplierId" placeholder="e.g. SUP-001" required
+                                        class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Supplier Name</label>
+                                    <input type="text" id="supplierName" required
+                                        class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Supplier Contact</label>
+                                    <input type="text" id="supplierContact" required
+                                        class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Supplier Email</label>
+                                    <input type="email" id="supplierEmail" required
+                                        class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Supplier Address</label>
+                                    <textarea id="supplierAddress" rows="2" required
+                                        class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Material & Cost Info -->
+                            <div class="space-y-4">
+                                <h3 class="text-sm uppercase tracking-wide text-gray-500 font-semibold border-b pb-2">
+                                    Order Details</h3>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Material Name</label>
+                                    <select id="materialName" required
+                                        class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none bg-white">
+                                        <option value="">Select Material</option>
+                                        <option value="green leaf">Green Leaf</option>
+                                        <option value="tea powder">Tea Powder</option>
+                                        <option value="labelling & stickers">Labelling & Stickers</option>
+                                        <option value="tin containers">Tin Containers</option>
+                                        <option value="fuel">Fuel</option>
+                                        <option value="chemicals">Chemicals</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Unit Price (₹)</label>
+                                    <input type="number" id="unitPrice" step="0.01" min="0" required
+                                        class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Quantity (Units)</label>
+                                    <input type="number" id="quantity" step="0.01" min="0" required
+                                        class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Total Cost (₹)</label>
+                                    <input type="number" id="totalCost" step="0.01" min="0" readonly
+                                        class="mt-1 w-full px-4 py-2 border rounded-lg bg-gray-50 text-gray-700 cursor-not-allowed">
+                                </div>
+                            </div>
+
+                            <!-- Status & Delivery Info -->
+                            <div class="space-y-4">
+                                <h3 class="text-sm uppercase tracking-wide text-gray-500 font-semibold border-b pb-2">
+                                    Logistics Description</h3>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Purchase Status</label>
+                                    <select id="purchaseStatus" required
+                                        class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none bg-white">
+                                        <option value="pending">Pending</option>
+                                        <option value="approved">Approved</option>
+                                        <option value="delivered">Delivered</option>
+                                        <option value="cancelled">Cancelled</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Transport Mode</label>
+                                    <select id="transportMode" required
+                                        class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none bg-white">
+                                        <option value="lorry">Lorry</option>
+                                        <option value="auto">Auto</option>
+                                        <option value="tempo">Tempo</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Delivery Status</label>
+                                    <select id="deliveryStatus" required
+                                        class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none bg-white">
+                                        <option value="not received">Not Received</option>
+                                        <option value="received">Received</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Delivery Date</label>
+                                    <input type="date" id="deliveryDate"
+                                        class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Remarks</label>
+                                    <textarea id="remarks" rows="2"
+                                        class="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 outline-none"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex justify-end space-x-3">
+                            <button type="button" onclick="document.getElementById('purchaseOrderForm').reset()"
+                                class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 font-medium text-gray-700 transition">
+                                Reset
+                            </button>
+                            <button type="submit"
+                                class="px-6 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg hover:from-purple-700 hover:to-indigo-700 font-bold shadow-lg transform hover:-translate-y-0.5 transition duration-200">
+                                Create Order
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Purchase Orders List -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                        <h3 class="text-lg font-bold text-gray-800">Order History</h3>
+                        <button onclick="fetchPurchaseOrders()" class="text-purple-600 hover:text-purple-800">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Order ID</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Date</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Supplier</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Material</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Cost</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Status</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Delivery</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" id="ordersTableBody">
+                                <!-- Rows will be populated by JS -->
+                                <tr>
+                                    <td colspan="7" class="px-6 py-4 text-center text-gray-500">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination if needed, simplified for now -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="role-utils.js"></script>
+    <script src="purchase_orders.js"></script>
+</body>
+
+</html>
